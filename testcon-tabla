@@ -1,3 +1,11 @@
+###################################################
+#CONFIGURACION
+###################################################
+DECSEP=","
+
+###################################################
+#SCRIPT (NO MODIFIQUE)
+###################################################
 ultima=""
 while [ "x$ultima" = "x" ]
 do
@@ -29,6 +37,11 @@ do
     down=$(echo $downtxt | cut -f 2 -d ' ')
     up=$(head -n $i tmp/times-up.log | tail -n 1 | cut -f 2 -d ' ')
     latency=$(head -n $i tmp/times-latency.log | tail -n 1 | cut -f 2 -d ':' | cut -f 2 -d ' ')
-    echo "'$fecha', '$hora', '$segundos', '$latency', '$down', '$up'" >> testcon.csv
+
+    downch=$(echo $down | sed -e "s/\./$DECSEP/")
+    upch=$(echo $down | sed -e "s/\./$DECSEP/")
+    latencych=$(echo $latency | sed -e "s/\./$DECSEP/")
+
+    echo "'$fecha', '$hora', '$segundos', '$latencych', '$downch', '$upch'" >> testcon.csv
     echo "$fecha\t$hora\t$segundos\t$latency\t$down\t$up" >> testcon.dat
 done

@@ -1,12 +1,8 @@
 DIR=$(pwd)
-
-echo "Creando el script de la prueba..."
-echo "DIR=\"$DIR\"" > testcon-test
-cat bin/testcon-test.tmp >> testcon-test
-chmod a+rx testcon-test
-
-echo "Creando el archivo de programacion..."
-echo "\
+###################################################
+#CONFIGURACION
+###################################################
+tiempo="\
 #Descomenta si lo quiere cada minuto
 #0-59 * * * * $DIR/testcon-test
 #Descomenta si lo quiere cada 5 minutos
@@ -18,8 +14,21 @@ echo "\
 #Descomenta si lo quiere cada 30 minutos
 #0,30 * * * * $DIR/testcon-test
 #Descomenta si lo quiere cada hora
-#0 * * * * $DIR/testcon-test
-" > testcon-cron
+#0 * * * * $DIR/testcon-test\
+"
+
+###################################################
+#SCRIPT (NO MODIFIQUE)
+###################################################
+DIR=$(pwd)
+
+echo "Creando el script de la prueba..."
+echo "DIR=\"$DIR\"" > testcon-test
+cat bin/testcon-test.tmp >> testcon-test
+chmod a+rx testcon-test
+
+echo "Creando el archivo de programacion..."
+echo "$tiempo" > testcon-cron
 
 echo "Ahora puede:
 

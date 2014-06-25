@@ -25,9 +25,14 @@ si lo descargaste con git):
 
      $ unzip master.zip      
 
-Para instalarlo:
+Para instalarlo: 
 
      $ cd TestCon
+
+Escoge la frecuencia con la que quieres que se ejecute en tu maquina.
+Por defecto es cada 5 minutos.  Esto se hace editando el archivo
+"testcon-instala".
+
      TestCon $ sh testcon-instala
 
 Para hacer una prueba inicial:
