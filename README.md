@@ -15,8 +15,13 @@ Para descargarlo:
 
      $ git clone http://github.com/facom/TestCon.git
 
+Si lo descargas con git podras obtener actualizaciones facilmente.
+
 Si no tienes git descarga el zip de:
-https://github.com/facom/TestCon/archive/master.zip.  Unzip:
+https://github.com/facom/TestCon/archive/master.zip.
+
+En este caso descomprimelo con unzip (no tienes que usar este comando
+si lo descargaste con git):
 
      $ unzip master.zip      
 
