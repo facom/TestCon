@@ -16,8 +16,8 @@ done
 echo "Todas las pruebas terminadas..."
 
 echo "Obteniendo toda la informacion..."
-grep -B6 "Download" log/connection.log | grep "-" > tmp/times-down.log
-grep -B1 "Upload" log/connection.log | grep "-" > tmp/times-up.log
+grep -B6 "Download" log/connection.log | grep "/" > tmp/times-down.log
+grep -B1 "Upload" log/connection.log | grep "/" > tmp/times-up.log
 grep "ms$" log/connection.log > tmp/times-latency.log
 lineas=$(cat tmp/times-down.log | wc -l)
 datos=$((lineas/2))
@@ -30,9 +30,9 @@ do
     j=$((2*i))
     echo "Registro $i..."
     tiempo=$(head -n $j tmp/times-down.log | tail -n 2 | head -n 1)
-    fecha=$(echo $tiempo | cut -f 1 -d '/')
-    hora=$(echo $tiempo | cut -f 2 -d '/')
-    segundos=$(echo $tiempo | cut -f 3 -d '/')
+    fecha=$(echo $tiempo | cut -f 1 -d '-')
+    hora=$(echo $tiempo | cut -f 2 -d '-')
+    segundos=$(echo $tiempo | cut -f 3 -d '-')
     downtxt=$(head -n $j tmp/times-down.log | tail -n 2 | tail -n 1)
     down=$(echo $downtxt | cut -f 2 -d ' ')
     up=$(head -n $i tmp/times-up.log | tail -n 1 | cut -f 2 -d ' ')
