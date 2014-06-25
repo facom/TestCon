@@ -9,12 +9,15 @@ Necesitas:
 
      - Linux o MacOS
      - Instalar el interprete de python
-     - Instalar git (si lo descargas desde este repositorio)
-     - Instalar gnuplot
+     - Instalar git (opcional)
+     - Instalar gnuplot (opcional)
 
 Para descargarlo:
 
      $ git clone http://github.com/facom/TestCon.git
+
+Si no tienes git descarga el zip de:
+https://github.com/facom/TestCon/archive/master.zip
 
 Para instalarlo:
 
