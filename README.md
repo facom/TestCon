@@ -1,9 +1,8 @@
 TestCon
 =======
+Jorge Zuluaga (C) 2014
 
 Verifica el estado y ancho de banda de una conexion.
-
-Jorge Zuluaga (C) 2014
 
 Necesitas:
 
