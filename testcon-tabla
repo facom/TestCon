@@ -1,6 +1,7 @@
 ###################################################
 #CONFIGURACION
 ###################################################
+FRECUENCIA=5 #MINUTOS
 DECSEP=","
 
 ###################################################
@@ -25,6 +26,7 @@ datos=$((lineas/2))
 echo "Generando tablas 'testcon.dat' y 'testcon.csv' con $datos registros..."
 echo -n > testcon.dat
 echo "'Fecha', 'Hora', 'Segundos', 'Latencia (ms)', 'Download (Mbit/s)', 'Upload (Mbit/s)'" > testcon.csv
+anterior=0
 for i in $(seq 1 $datos)
 do
     j=$((2*i))
@@ -33,6 +35,9 @@ do
     fecha=$(echo $tiempo | cut -f 1 -d '-')
     hora=$(echo $tiempo | cut -f 2 -d '-')
     segundos=$(echo $tiempo | cut -f 3 -d '-')
+    diferencia=$((segundos-anterior))
+    if [ $diferencia -gt $((FRECUENCIA*60)) ];then echo  >> testcon.dat;fi
+    anterior=$segundos
     downtxt=$(head -n $j tmp/times-down.log | tail -n 2 | tail -n 1)
     down=$(echo $downtxt | cut -f 2 -d ' ')
     up=$(head -n $i tmp/times-up.log | tail -n 1 | cut -f 2 -d ' ')
