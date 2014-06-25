@@ -31,7 +31,7 @@ Para programar la prueba periodicamente:
 
      TestCon $ sh testcon-programa
 
-Para hacer una tabla con los datos de tu conexion usa:
+Para hacer una tabla de datos con el historial de conexion:
 
      TestCon $ sh testcon-tabla
 
