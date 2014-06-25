@@ -56,7 +56,7 @@ El programa anterior producira dos tablas "testcon.dat" y
 
 Si tienes gnuplot instalado ejecuta:
 
-     TestCon $ sh testcon-grafica
+     TestCon $ gnuplot testcon-grafica
 
 En el archivo "testcon.png" aparecera un grafico con el historial de
 tu conexion.
