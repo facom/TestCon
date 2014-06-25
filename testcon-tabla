@@ -43,5 +43,5 @@ do
     latencych=$(echo $latency | sed -e "s/\./$DECSEP/")
 
     echo "'$fecha $hora', '$segundos', '$latencych', '$downch', '$upch'" >> testcon.csv
-    echo "'$fecha $hora'\t$segundos\t$latency\t$down\t$up" >> testcon.dat
+    echo "$fecha,$hora\t$segundos\t$latency\t$down\t$up" >> testcon.dat
 done
