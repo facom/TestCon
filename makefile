@@ -4,8 +4,9 @@ commit:
 	@git push origin master
 
 pull:
-	git reset --HEAD null
-	git pull 
+	echo "Updating..."
+	@git reset --hard HEAD
+	@git pull 
 
 clean:
 	find . -name "*~" -exec	rm -rf {} \;
