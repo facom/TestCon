@@ -14,15 +14,22 @@ Para descargarlo:
 
      $ git clone http://github.com/facom/TestCon.git
 
-Para ponerlo a funcionar:
+Para instalarlo:
 
      $ cd TestCon
-     TestCon $ crontab testcon-cron
+     TestCon $ sh testcon-instala
 
-Para verificar que funciona espera 10 minutos después del comando
-anterior y ejecuta:
+Para hacer una prueba inicial:
+     
+     TestCon $ sh testcon-test
 
-     TestCon $ sh testcon-check
+Para ver los resultados de las pruebas:
+
+     TestCon $ cat log/testcon.log
+
+Para programar la prueba periodicamente:
+
+     TestCon $ sh testcon-programa
 
 Para hacer una tabla con los datos de tu conexion usa:
 
@@ -33,7 +40,7 @@ El programa anterior producira dos tablas "testcon.dat" y
 
 Si tienes gnuplot instalado ejecuta:
 
-     TestCon $ sh testcon-plot 
+     TestCon $ sh testcon-grafica
 
 En el archivo "testcon.png" aparecera un grafico con el historial de
 tu conexion.

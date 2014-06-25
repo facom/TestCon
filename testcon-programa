@@ -1,0 +1,8 @@
+if [ -e testcon-cron ]
+then
+    echo "Programando prueba de conexion..."
+    grep -v "#" testcon-cron
+    crontab testcon-cron
+else
+    echo "Debe primero instalar: $ sh testcon-instala"
+fi
