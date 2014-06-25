@@ -1,29 +1,34 @@
 ultima=""
 while [ "x$ultima" = "x" ]
 do
-    echo "Verificando si el ultimo test termino..."
+    echo "Esperando que el ultimo test termine '$ultima'..."
     ultima=$(tail -n 1 log/connection.log | grep "Mbit")
+    if [ "x$ultima" = "x" ];then sleep 5;fi
 done
 echo "Todas las pruebas terminadas..."
 
 echo "Obteniendo toda la informacion..."
-grep -B6 "Download" log/connection.log | grep "/" > tmp/times.log
-lineas=$(cat tmp/times.log | wc -l)
+grep -B6 "Download" log/connection.log | grep "/" > tmp/times-down.log
+grep -B1 "Upload" log/connection.log | grep "/" > tmp/times-up.log
+grep "ms$" log/connection.log > tmp/times-latency.log
+lineas=$(cat tmp/times-down.log | wc -l)
 datos=$((lineas/2))
 
 echo "Generando tablas 'testcon.dat' y 'testcon.csv' con $datos registros..."
 echo -n > testcon.dat
-echo "'Fecha', 'Hora', 'Segundos', 'Download'" > testcon.csv
+echo "'Fecha', 'Hora', 'Segundos', 'Latencia (ms)', 'Download (Mbit/s)', 'Upload (Mbit/s)'" > testcon.csv
 for i in $(seq 1 $datos)
 do
     j=$((2*i))
     echo "Registro $i..."
-    tiempo=$(head -n $j tmp/times.log | tail -n 2 | head -n 1)
+    tiempo=$(head -n $j tmp/times-down.log | tail -n 2 | head -n 1)
     fecha=$(echo $tiempo | cut -f 1 -d '/')
     hora=$(echo $tiempo | cut -f 2 -d '/')
     segundos=$(echo $tiempo | cut -f 3 -d '/')
-    speedtxt=$(head -n $j tmp/times.log | tail -n 2 | tail -n 1)
-    speed=$(echo $speedtxt | cut -f 2 -d ' ')
-    echo "'$fecha', '$hora', '$segundos', '$speed'" >> testcon.csv
-    echo "$fecha\t$hora\t$segundos\t$speed" >> testcon.dat
+    downtxt=$(head -n $j tmp/times-down.log | tail -n 2 | tail -n 1)
+    down=$(echo $downtxt | cut -f 2 -d ' ')
+    up=$(head -n $i tmp/times-up.log | tail -n 1 | cut -f 2 -d ' ')
+    latency=$(head -n $i tmp/times-latency.log | tail -n 1 | cut -f 2 -d ':' | cut -f 2 -d ' ')
+    echo "'$fecha', '$hora', '$segundos', '$latency', '$down', '$up'" >> testcon.csv
+    echo "$fecha\t$hora\t$segundos\t$latency\t$down\t$up" >> testcon.dat
 done
