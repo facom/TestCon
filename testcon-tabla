@@ -16,8 +16,8 @@ done
 echo "Todas las pruebas terminadas..."
 
 echo "Obteniendo toda la informacion..."
-grep -B6 "Download" log/connection.log | grep "/" > tmp/times-down.log
-grep -B1 "Upload" log/connection.log | grep "/" > tmp/times-up.log
+grep -B6 "Download" log/connection.log | grep "-" > tmp/times-down.log
+grep -B1 "Upload" log/connection.log | grep "-" > tmp/times-up.log
 grep "ms$" log/connection.log > tmp/times-latency.log
 lineas=$(cat tmp/times-down.log | wc -l)
 datos=$((lineas/2))
