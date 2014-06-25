@@ -3,6 +3,6 @@ TIMEBASE=30
     time=$((RANDOM%TIMEBASE))
     echo "Comenzando la prueba en $time segundos..."
     sleep $time
-    date +%Y/%m/%d/%H:%M:%S/%s
+    date +%Y-%m-%d/%H:%M:%S/%s
     python $DIR/bin/speedtest_cli.py --server 2095
 }|tee -a $DIR/log/connection.log
