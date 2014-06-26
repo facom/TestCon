@@ -18,7 +18,7 @@ if [ $ensayos -ge $MAX_ENSAYOS ];then
 fi
 
 {
-    touch $LOCKFILE
+    echo > $LOCKFILE
     time=$((RANDOM%TIMEBASE))
     echo "Comenzando la prueba en $time segundos (despues de $ensayos)..."
     sleep $time
