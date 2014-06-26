@@ -1,3 +1,6 @@
+if [ ! -e "testcon-comun" ];then
+   cp -rf bin/testcon-comun.tmp testcon-comun
+fi
 . ./testcon-comun
 TIEMPOS=""
 for t in $(seq 60 -$FRECUENCIA 0)
