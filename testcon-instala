@@ -1,4 +1,4 @@
-. testcon-comun
+. ./testcon-comun
 TIEMPOS=""
 for t in $(seq 60 -$FRECUENCIA 0)
 do

@@ -1,4 +1,4 @@
-. testcon-comun
+. ./testcon-comun
 ultima=""
 while [ "x$ultima" = "x" ]
 do

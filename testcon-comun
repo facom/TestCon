@@ -31,4 +31,3 @@ if [ ! -e $CONLOG ];then
    noprobado=1
 fi
 BASENAME="testcon-$HOSTNAME"
-
