@@ -2,6 +2,8 @@ TestCon
 =======
 Jorge Zuluaga (C) 2014
 
+Última actualización: Junio 26 de 2014, 17:28:00
+
 Verifica el estado y ancho de banda de una conexion.
 
 Necesitas:
