@@ -31,7 +31,7 @@ Para instalarlo:
 
 Escoge la frecuencia con la que quieres que se ejecute en tu maquina.
 Por defecto es cada 5 minutos.  Esto se hace editando el archivo
-"testcon-instala".
+"testcon-comun".
 
      TestCon $ sh testcon-instala
 
