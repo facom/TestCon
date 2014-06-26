@@ -1,7 +1,7 @@
 #########################################
 #CONFIGURACION
 #########################################
-#FRECUENCIA DE MONITOREO (SOLAMENTE: 1,5,10,15,20,30)
+#FRECUENCIA DE MONITOREO (SOLAMENTE: 1,5,10,15,20,30, 60)
 FRECUENCIA=5 #MINUTOS
 #SEPARADOR DE MILES
 DECSEP=","
