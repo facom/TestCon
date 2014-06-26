@@ -28,12 +28,12 @@ si lo descargaste con git):
 Para instalarlo: 
 
      $ cd TestCon
-
-Escoge la frecuencia con la que quieres que se ejecute en tu maquina.
-Por defecto es cada 5 minutos.  Esto se hace editando el archivo
-"testcon-comun".
-
      TestCon $ sh testcon-instala
+
+Despues de instalar puedes escoges la frecuencia con la que quieres
+que se ejecute en tu maquina.  Por defecto es cada 5 minutos.  Esto se
+hace editando el archivo "testcon-comun" y volviendo a correr el
+script de instalacion.
 
 Para hacer una prueba inicial:
      
