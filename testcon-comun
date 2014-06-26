@@ -24,9 +24,11 @@ fi
 #ARCHIVOS DE SALIDA
 #########################################
 CONLOG="log/connection-$HOSTNAME.log"
+noprobado=0
 if [ ! -e $CONLOG ];then
    echo "El servidor $HOSTNAME no ha sido probado..."
-   exit 1
+   echo > $CONLOG
+   noprobado=1
 fi
 BASENAME="testcon-$HOSTNAME"
 
