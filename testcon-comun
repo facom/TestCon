@@ -1,0 +1,32 @@
+#########################################
+#CONFIGURACION
+#########################################
+#FRECUENCIA DE MONITOREO (SOLAMENTE: 1,5,10,15,20,30)
+FRECUENCIA=1 #MINUTOS
+#SEPARADOR DE MILES
+DECSEP=","
+#MUESTRA REGISTROS EN SCRIPT DE TABLA
+MUESTRA_REGISTROS=0
+
+#########################################
+#ENTRADAS
+#########################################
+#DIRECTORIO DE INSTALACION
+DIR=$(pwd)
+
+#NOMBRE DE MAQUINA
+HOSTNAME=$1
+if [ "x$HOSTNAME" = "x" ];then
+   HOSTNAME=$(hostname)
+fi
+
+#########################################
+#ARCHIVOS DE SALIDA
+#########################################
+CONLOG="log/connection-$HOSTNAME.log"
+if [ ! -e $CONLOG ];then
+   echo "El servidor $HOSTNAME no ha sido probado..."
+   exit 1
+fi
+BASENAME="testcon-$HOSTNAME"
+
