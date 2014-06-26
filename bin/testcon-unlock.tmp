@@ -1,0 +1,24 @@
+DIRB=$DIR
+. $DIR/testcon-comun
+DIR=$DIRB
+LOCKFILE="$DIR/log/.lock"
+CONLOG="$DIR/$CONLOG"
+
+time=$(tail -n 9 $CONLOG | head -n 1 | cut -f 3 -d '-')
+now=$(date +%s)
+dif=$((now-time))
+max=$((FRECUENCIA*80))
+{
+    date
+    echo "Ultimo tiempo: $time, Ahora: $now..."
+    echo "Chequeando bloqueo para dif = $dif, max = $max..."
+    if [ $dif -gt $max ];then
+	echo "El ultimo registro es mas viejo que la frecuencia..."
+	if [ -e $DIR/log/.lock ];then
+	    echo "Borrando el archivo de bloqueo..."
+	    rm $DIR/log/.lock
+	fi
+    else
+	echo "No hay problema de bloqueo..."
+    fi
+} |tee -a $DIR/log/unlock.log

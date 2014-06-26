@@ -2,21 +2,37 @@ if [ ! -e "testcon-comun" ];then
    cp -rf bin/testcon-comun.tmp testcon-comun
 fi
 . ./testcon-comun
+
 TIEMPOS=""
 for t in $(seq 60 -$FRECUENCIA 0)
 do
     TIEMPOS="$t,$TIEMPOS"
 done
 TIEMPOS=$(echo "$TIEMPOS" | sed -e "s/,60,//")
-tiempo="$TIEMPOS * * * * $DIR/testcon-test"
+tiempotest="$TIEMPOS * * * * $DIR/testcon-test"
+
+TIEMPOS=""
+BLOQFREQ=20
+for t in $(seq 60 -$BLOQFREQ 0)
+do
+    TIEMPOS="$t,$TIEMPOS"
+done
+TIEMPOS=$(echo "$TIEMPOS" | sed -e "s/,60,//")
+tiempobloqueo="$TIEMPOS * * * * $DIR/testcon-unlock"
 
 echo "Creando el script de la prueba..."
 echo "DIR=\"$DIR\"" > testcon-test
 cat bin/testcon-test.tmp >> testcon-test
 chmod a+rx testcon-test
 
+echo "Creando el script de desbloqueo..."
+echo "DIR=\"$DIR\"" > testcon-unlock
+cat bin/testcon-unlock.tmp >> testcon-unlock
+chmod a+rx testcon-unlock
+
 echo "Creando el archivo de programacion..."
-echo "$tiempo" > testcon-cron
+echo "$tiempotest" > testcon-cron
+echo "$tiempobloqueo" >> testcon-cron
 
 echo "Ahora puede:
 

@@ -30,5 +30,19 @@ ultima=$(tail -n 1 $TMPFILE | grep "Mbit")
 if [ "x$ultima" != "x" ];then
     cat $TMPFILE >> $DIR/log/connection-$HOSTNAME.log
 fi
+
+ultima=$(tail -n 1 $TMPFILE | grep "Cannot")
+if [ "x$ultima" != "x" ];then
+    cat $TMPFILE >> $DIR/log/connection-$HOSTNAME.log
+    echo "\
+No Test
+No Host: 0.1 ms
+No testing download
+Download: 0.1 Mbits/s
+No testing upload
+Upload: 0.1 Mbits/s\
+" >> $DIR/log/connection-$HOSTNAME.log
+fi
+
 rm $TMPFILE
 rm $LOCKFILE
