@@ -1,26 +1,11 @@
-DIR=$(pwd)
-###################################################
-#CONFIGURACION
-###################################################
-tiempo="\
-#Descomenta si lo quiere cada minuto
-#0-59 * * * * $DIR/testcon-test
-#Descomenta si lo quiere cada 5 minutos
-0,5,10,15,20,25,30,35,40,45,50,55 * * * * $DIR/testcon-test
-#Descomenta si lo quiere cada 10 minutos
-#0,10,20,30,40,50 * * * * $DIR/testcon-test
-#Descomenta si lo quiere cada 15 minutos
-#0,15,30,45 * * * * $DIR/testcon-test
-#Descomenta si lo quiere cada 30 minutos
-#0,30 * * * * $DIR/testcon-test
-#Descomenta si lo quiere cada hora
-#0 * * * * $DIR/testcon-test\
-"
-
-###################################################
-#SCRIPT (NO MODIFIQUE)
-###################################################
-DIR=$(pwd)
+. testcon-comun
+TIEMPOS=""
+for t in $(seq 60 -$FRECUENCIA 0)
+do
+    TIEMPOS="$t,$TIEMPOS"
+done
+TIEMPOS=$(echo "$TIEMPOS" | sed -e "s/,60,//")
+tiempo="$TIEMPOS * * * * $DIR/testcon-test"
 
 echo "Creando el script de la prueba..."
 echo "DIR=\"$DIR\"" > testcon-test

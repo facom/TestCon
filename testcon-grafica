@@ -1,12 +1,17 @@
+. testcon-comun
+echo "\
 set term png
-set output "testcon.png"
+set output '$BASENAME.png'
 set xdata time
 set timefmt '%d/%m/%Y,%H:%M:%S'
-set xtics rotate by 0 font "Arial,10"
-set format x "%d/%Hh\n%M:%S"
+set xtics rotate by 0 font 'Arial,10'
+set format x \"%d/%Hh\\\n%M:%S\"
 set xlabel 'tiempo'
 set ylabel 'Ancho de banda (Mbit/s), Latencia (ms)'
+set title 'Monitoreo $HOSTNAME'
 set grid
 set key left
 set logscale y
-plot [:] [:] 'testcon.dat' u 1:4 w lp t 'Download', 'testcon.dat' u 1:5 w lp t 'Upload', 'testcon.dat' u 1:($3/1) w lp t 'Latency'
+plot [:] [:] '$BASENAME.dat' u 1:4 w lp t 'Download', '$BASENAME.dat' u 1:5 w lp t 'Upload', '$BASENAME.dat' u 1:(\$3/1) w lp t 'Latency'
+" > tmp/testcon.gpl
+gnuplot tmp/testcon.gpl

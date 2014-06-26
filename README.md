@@ -41,11 +41,15 @@ Para hacer una prueba inicial:
 
 Para ver los resultados de las pruebas:
 
-     TestCon $ cat log/testcon.log
+     TestCon $ cat log/connection-<MAQUINA>.log
 
 Para programar la prueba periodicamente:
 
      TestCon $ sh testcon-programa
+
+Para detener la prueba:
+
+     TestCon $ sh testcon-para
 
 Para hacer una tabla de datos con el historial de conexion:
 
@@ -56,7 +60,7 @@ El programa anterior producira dos tablas "testcon.dat" y
 
 Si tienes gnuplot instalado ejecuta:
 
-     TestCon $ gnuplot testcon-grafica
+     TestCon $ sh testcon-grafica
 
 En el archivo "testcon.png" aparecera un grafico con el historial de
 tu conexion.

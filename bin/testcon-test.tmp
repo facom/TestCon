@@ -1,8 +1,34 @@
+HOSTNAME=$(hostname)
 TIMEBASE=30
-{   
+LOCKFILE="$DIR/log/.lock"
+TMPFILE="$DIR/tmp/tmp.$RANDOM"
+MAX_ENSAYOS=10
+echo "Cliente: $HOSTNAME"
+ensayos=0
+while [ -e $LOCKFILE -a $ensayos -le $MAX_ENSAYOS ]
+do
+    echo "Archivo de bitacora bloqueado.  Prueba en curso (ensayo $ensayos)"
+    sleep 5
+    ((ensayos++))
+done
+
+if [ $ensayos -ge $MAX_ENSAYOS ];then
+    echo $(date) ": Maximo numero de ensayos completados" >> $DIR/log/errors.log
+    exit 1
+fi
+
+{
+    touch $LOCKFILE
     time=$((RANDOM%TIMEBASE))
-    echo "Comenzando la prueba en $time segundos..."
+    echo "Comenzando la prueba en $time segundos (despues de $ensayos)..."
     sleep $time
     date +%d/%m/%Y-%H:%M:%S-%s
     python $DIR/bin/speedtest_cli.py --server 2095
-}|tee -a $DIR/log/connection.log
+} |tee $TMPFILE
+
+ultima=$(tail -n 1 $TMPFILE | grep "Mbit")
+if [ "x$ultima" != "x" ];then
+    cat $TMPFILE >> $DIR/log/connection-$HOSTNAME.log
+fi
+rm $TMPFILE
+rm $LOCKFILE

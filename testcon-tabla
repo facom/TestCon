@@ -1,42 +1,34 @@
-###################################################
-#CONFIGURACION
-###################################################
-FRECUENCIA=5 #MINUTOS
-DECSEP=","
-
-###################################################
-#SCRIPT (NO MODIFIQUE)
-###################################################
+. testcon-comun
 ultima=""
 while [ "x$ultima" = "x" ]
 do
     echo "Esperando que el ultimo test termine '$ultima'..."
-    ultima=$(tail -n 1 log/connection.log | grep "Mbit")
+    ultima=$(tail -n 1 $CONLOG | grep "Mbit")
     if [ "x$ultima" = "x" ];then sleep 5;fi
 done
 echo "Todas las pruebas terminadas..."
 
 echo "Obteniendo toda la informacion..."
-grep -B6 "Download" log/connection.log | grep "/" > tmp/times-down.log
-grep -B1 "Upload" log/connection.log | grep "/" > tmp/times-up.log
-grep "ms$" log/connection.log > tmp/times-latency.log
+grep -B6 "Download" $CONLOG | grep "/" > tmp/times-down.log
+grep -B1 "Upload" $CONLOG | grep "/" > tmp/times-up.log
+grep "ms$" $CONLOG > tmp/times-latency.log
 lineas=$(cat tmp/times-down.log | wc -l)
 datos=$((lineas/2))
 
-echo "Generando tablas 'testcon.dat' y 'testcon.csv' con $datos registros..."
-echo > testcon.dat
-echo "'Fecha', 'Hora', 'Segundos', 'Latencia (ms)', 'Download (Mbit/s)', 'Upload (Mbit/s)'" > testcon.csv
+echo "Generando tablas '$BASENAME.dat' y '$BASENAME.csv' con $datos registros..."
+echo > $BASENAME.dat
+echo "'Fecha', 'Hora', 'Segundos', 'Latencia (ms)', 'Download (Mbit/s)', 'Upload (Mbit/s)'" > $BASENAME.csv
 anterior=0
 for i in $(seq 1 $datos)
 do
     j=$((2*i))
-    echo "Registro $i..."
+    if [ $MUESTRA_REGISTROS -gt 0 ];then echo "Registro $i...";fi
     tiempo=$(head -n $j tmp/times-down.log | tail -n 2 | head -n 1)
     fecha=$(echo $tiempo | cut -f 1 -d '-')
     hora=$(echo $tiempo | cut -f 2 -d '-')
     segundos=$(echo $tiempo | cut -f 3 -d '-')
     diferencia=$((segundos-anterior))
-    if [ $diferencia -gt $((FRECUENCIA*60+60)) ];then echo  >> testcon.dat;fi
+    if [ $diferencia -gt $((FRECUENCIA*60+60)) ];then echo  >> $BASENAME.dat;fi
     anterior=$segundos
     downtxt=$(head -n $j tmp/times-down.log | tail -n 2 | tail -n 1)
     down=$(echo $downtxt | cut -f 2 -d ' ')
@@ -47,6 +39,6 @@ do
     upch=$(echo $down | sed -e "s/\./$DECSEP/")
     latencych=$(echo $latency | sed -e "s/\./$DECSEP/")
 
-    echo "'$fecha $hora', '$segundos', '$latencych', '$downch', '$upch'" >> testcon.csv
-    echo "$fecha,$hora\t$segundos\t$latency\t$down\t$up" >> testcon.dat
+    echo "'$fecha $hora', '$segundos', '$latencych', '$downch', '$upch'" >> $BASENAME.csv
+    echo "$fecha,$hora\t$segundos\t$latency\t$down\t$up" >> $BASENAME.dat
 done
