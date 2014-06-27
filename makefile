@@ -19,7 +19,7 @@ clean:
 
 cleanall:clean
 	@echo "Cleaning all..."
-	@rm -rf testcon-test testcon-cron *.dat *.png *.csv
+	@rm -rf testcon-grafica testcon-comun testcon-test testcon-cron *.dat *.png *.csv
 	@rm -rf log/*
 	@rm -rf tmp/*
 
