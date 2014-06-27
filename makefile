@@ -15,6 +15,7 @@ unlock:
 clean:
 	@echo "Soft cleaning..."
 	@find . -name "*~" -exec	rm -rf {} \;
+	@rm -rf *.dat *.png *.csv
 
 cleanall:clean
 	@echo "Cleaning all..."

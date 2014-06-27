@@ -9,36 +9,51 @@ done
 echo "Todas las pruebas terminadas..."
 
 echo "Obteniendo toda la informacion..."
-grep -B6 "Download" $CONLOG | grep "/" > tmp/times-down.log
-grep -B1 "Upload" $CONLOG | grep "/" > tmp/times-up.log
-grep "ms$" $CONLOG > tmp/times-latency.log
-lineas=$(cat tmp/times-down.log | wc -l)
+grep -B6 "Download" $CONLOG | grep "/" > tmp/times-down-$HOSTNAME.log
+grep -B1 "Upload" $CONLOG | grep "/" > tmp/times-up-$HOSTNAME.log
+grep "ms$" $CONLOG > tmp/times-latency-$HOSTNAME.log
+
+lineas=$(cat tmp/times-down-$HOSTNAME.log | wc -l)
 datos=$((lineas/2))
 
-echo "Generando tablas '$BASENAME.dat' y '$BASENAME.csv' con $datos registros..."
-echo > $BASENAME.dat
-echo "'Fecha', 'Hora', 'Segundos', 'Latencia (ms)', 'Download (Mbit/s)', 'Upload (Mbit/s)'" > $BASENAME.csv
+if [ $datos -eq 0 ];then
+    echo "No hay todavia datos..."
+    exit 0
+fi
+
+echo "Generando tablas '$BASENAME.dat' y '$BASENAME.csv' con $datos nuevos registros..."
+
+if [ ! -e data/$BASENAME.data ];then
+    echo > data/$BASENAME.dat
+fi
+
+if [ ! -e data/$BASENAME.csv ];then
+    echo "'Fecha', 'Hora', 'Segundos', 'Latencia (ms)', 'Download (Mbit/s)', 'Upload (Mbit/s)'" > data/$BASENAME.csv
+fi
 anterior=0
 for i in $(seq 1 $datos)
 do
     j=$((2*i))
     if [ $MUESTRA_REGISTROS -gt 0 ];then echo "Registro $i...";fi
-    tiempo=$(head -n $j tmp/times-down.log | tail -n 2 | head -n 1)
+    tiempo=$(head -n $j tmp/times-down-$HOSTNAME.log | tail -n 2 | head -n 1)
     fecha=$(echo $tiempo | cut -f 1 -d '-')
     hora=$(echo $tiempo | cut -f 2 -d '-')
     segundos=$(echo $tiempo | cut -f 3 -d '-')
     diferencia=$((segundos-anterior))
-    if [ $diferencia -gt $((FRECUENCIA*60+60)) ];then echo  >> $BASENAME.dat;fi
+    if [ $diferencia -gt $((FRECUENCIA*60+60)) ];then echo  >> data/$BASENAME.dat;fi
     anterior=$segundos
-    downtxt=$(head -n $j tmp/times-down.log | tail -n 2 | tail -n 1)
+    downtxt=$(head -n $j tmp/times-down-$HOSTNAME.log | tail -n 2 | tail -n 1)
     down=$(echo $downtxt | cut -f 2 -d ' ')
-    up=$(head -n $i tmp/times-up.log | tail -n 1 | cut -f 2 -d ' ')
-    latency=$(head -n $i tmp/times-latency.log | tail -n 1 | cut -f 2 -d ':' | cut -f 2 -d ' ')
+    up=$(head -n $i tmp/times-up-$HOSTNAME.log | tail -n 1 | cut -f 2 -d ' ')
+    latency=$(head -n $i tmp/times-latency-$HOSTNAME.log | tail -n 1 | cut -f 2 -d ':' | cut -f 2 -d ' ')
 
     downch=$(echo $down | sed -e "s/\./$DECSEP/")
-    upch=$(echo $down | sed -e "s/\./$DECSEP/")
+    upch=$(echo $up | sed -e "s/\./$DECSEP/")
     latencych=$(echo $latency | sed -e "s/\./$DECSEP/")
 
-    echo "'$fecha $hora', '$segundos', '$latencych', '$downch', '$upch'" >> $BASENAME.csv
-    echo "$fecha,$hora\t$segundos\t$latency\t$down\t$up" >> $BASENAME.dat
+    echo "'$fecha $hora', '$segundos', '$latencych', '$downch', '$upch'" >> data/$BASENAME.csv
+    echo "$fecha,$hora\t$segundos\t$latency\t$down\t$up" >> data/$BASENAME.dat
 done
+
+mv $CONLOG historia/connect-$HOSTNAME-$RANDOM.log
+echo "Mbit" > $CONLOG
