@@ -25,6 +25,11 @@ echo "DIR=\"$DIR\"" > testcon-test
 cat bin/testcon-test.tmp >> testcon-test
 chmod a+rx testcon-test
 
+echo "Creando el script de grafico..."
+echo "DIR=\"$DIR\"" > testcon-grafica
+cat bin/testcon-grafica.tmp >> testcon-grafica
+chmod a+rx testcon-grafica
+
 echo "Creando el script de desbloqueo..."
 echo "DIR=\"$DIR\"" > testcon-unlock
 cat bin/testcon-unlock.tmp >> testcon-unlock

@@ -1,6 +1,8 @@
 #########################################
 #CONFIGURACION
 #########################################
+#DIRECTORIO DE INSTALACION
+DIR=$(pwd)
 #FRECUENCIA DE MONITOREO (SOLAMENTE: 1,5,10,15,20,30,60)
 FRECUENCIA=5 #MINUTOS
 #SEPARADOR DE MILES
@@ -12,13 +14,12 @@ MUESTRA_REGISTROS=0
 FECHA_INICIO=""
 #FECHA_FINAL="\"25/06/2014,20:00:00\""
 FECHA_FINAL=""
+#OUTPUT IMAGE DIRECTORY
+IMGDIR="$DIR/data"
 
 #########################################
 #ENTRADAS
 #########################################
-#DIRECTORIO DE INSTALACION
-DIR=$(pwd)
-
 #NOMBRE DE MAQUINA
 HOSTNAME=$1
 if [ "x$HOSTNAME" = "x" ];then

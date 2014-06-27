@@ -42,6 +42,11 @@ Download: 0.1 Mbits/s
 No testing upload
 Upload: 0.1 Mbits/s\
 " >> $DIR/log/conecta-$HOSTNAME.log
+    echo "No se pudo establecer conexion.  Probando en 1 minuto..."
+    sleep 60
+    rm $TMPFILE
+    rm $LOCKFILE
+    sh $DIR/testcon-test
 fi
 
 rm $TMPFILE

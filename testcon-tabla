@@ -23,7 +23,7 @@ fi
 
 echo "Generando tablas '$BASENAME.dat' y '$BASENAME.csv' con $datos nuevos registros..."
 
-if [ ! -e data/$BASENAME.data ];then
+if [ ! -e data/$BASENAME.dat ];then
     echo > data/$BASENAME.dat
 fi
 
@@ -55,5 +55,5 @@ do
     echo "$fecha,$hora\t$segundos\t$latency\t$down\t$up" >> data/$BASENAME.dat
 done
 
-mv $CONLOG historia/connect-$HOSTNAME-$RANDOM.log
+mv $CONLOG historia/conecta-$HOSTNAME-$RANDOM.log
 echo "Mbit" > $CONLOG
