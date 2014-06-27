@@ -29,7 +29,7 @@ fi
 #########################################
 #ARCHIVOS DE SALIDA
 #########################################
-CONLOG="log/connection-$HOSTNAME.log"
+CONLOG="log/conecta-$HOSTNAME.log"
 noprobado=0
 if [ ! -e $CONLOG ];then
    echo "El servidor $HOSTNAME no ha sido probado..."
