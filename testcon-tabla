@@ -30,7 +30,7 @@ fi
 if [ ! -e data/$BASENAME.csv ];then
     echo "'Fecha', 'Hora', 'Segundos', 'Latencia (ms)', 'Download (Mbit/s)', 'Upload (Mbit/s)'" > data/$BASENAME.csv
 fi
-anterior=0
+anterior=$(tail -n 1 data/$BASENAME.dat | cut -f 2)
 for i in $(seq 1 $datos)
 do
     j=$((2*i))
