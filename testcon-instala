@@ -3,6 +3,7 @@ if [ ! -e "testcon-comun" ];then
 fi
 . ./testcon-comun
 
+#AJUSTANDO TIEMPO DE MONITOREO
 TIEMPOS=""
 for t in $(seq 60 -$FRECUENCIA 0)
 do
@@ -11,14 +12,23 @@ done
 TIEMPOS=$(echo "$TIEMPOS" | sed -e "s/,60,//")
 tiempotest="$TIEMPOS * * * * $DIR/testcon-test"
 
+#AJUSTANDO TIEMPO DE DESBLOQUEO
 TIEMPOS=""
-BLOQFREQ=20
-for t in $(seq 60 -$BLOQFREQ 0)
+for t in $(seq 60 -$FREC_DESBLOQUEO 0)
 do
     TIEMPOS="$t,$TIEMPOS"
 done
 TIEMPOS=$(echo "$TIEMPOS" | sed -e "s/,60,//")
 tiempobloqueo="$TIEMPOS * * * * $DIR/testcon-unlock"
+
+#AJUSTANDO TIEMPO DE GRAFICO
+TIEMPOS=""
+for t in $(seq 60 -$FREC_GRAFICO 0)
+do
+    TIEMPOS="$t,$TIEMPOS"
+done
+TIEMPOS=$(echo "$TIEMPOS" | sed -e "s/,60,//")
+tiempografico="$TIEMPOS * * * * $DIR/testcon-grafica"
 
 echo "Creando el script de la prueba..."
 echo "DIR=\"$DIR\"" > testcon-test
@@ -26,7 +36,9 @@ cat bin/testcon-test.tmp >> testcon-test
 chmod a+rx testcon-test
 
 echo "Creando el script de grafico..."
+GNUPLOT=$(which gnuplot)
 echo "DIR=\"$DIR\"" > testcon-grafica
+echo "GNUPLOT=\"$GNUPLOT\"" >> testcon-grafica
 cat bin/testcon-grafica.tmp >> testcon-grafica
 chmod a+rx testcon-grafica
 
@@ -37,7 +49,8 @@ chmod a+rx testcon-unlock
 
 echo "Creando el archivo de programacion..."
 echo "$tiempotest" > testcon-cron
-echo "$tiempobloqueo" >> testcon-cron
+if [ $FREC_DESBLOQUEO -gt 0 ];then echo "$tiempobloqueo" >> testcon-cron;fi
+if [ $FREC_GRAFICO -gt 0 ];then echo "$tiempografico" >> testcon-cron;fi
 
 echo "Ahora puede:
 

@@ -3,8 +3,16 @@
 #########################################
 #DIRECTORIO DE INSTALACION
 DIR=$(pwd)
-#FRECUENCIA DE MONITOREO (SOLAMENTE: 1,5,10,15,20,30,60)
+
+#FRECUENCIA DE MONITOREO (Divisor de 60, recomendado 15, 0 si no)
 FRECUENCIA=5 #MINUTOS
+
+#FRECUENCIA DE DESBLOQUEO (Divisor de 60, recomendado 2*FRECUENCIA, 0 si no)
+FREC_DESBLOQUEO=20
+
+#FRECUENCIA DE GRAFICO (Divisor de 60, recomendado 2*FRECUENCIA, 0 si no)
+FREC_GRAFICO=60
+
 #SEPARADOR DE MILES
 DECSEP=","
 #MUESTRA REGISTROS EN SCRIPT DE TABLA
@@ -33,7 +41,7 @@ CONLOG="log/conecta-$HOSTNAME.log"
 noprobado=0
 if [ ! -e $CONLOG ];then
    echo "El servidor $HOSTNAME no ha sido probado..."
-   echo > $CONLOG
+   echo "Mbit" > $CONLOG
    noprobado=1
 fi
 BASENAME="testcon-$HOSTNAME"

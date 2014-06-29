@@ -1,6 +1,6 @@
 . ./testcon-comun
 ultima=""
-while [ "x$ultima" = "x" ]
+while [ "x$ultima" = "x" -a -e $CONLOG ]
 do
     echo "Esperando que el ultimo test termine '$ultima'..."
     ultima=$(tail -n 1 $CONLOG | grep "Mbit")
