@@ -35,6 +35,22 @@ echo "DIR=\"$DIR\"" > testcon-test
 cat bin/testcon-test.tmp >> testcon-test
 chmod a+rx testcon-test
 
+#AJUSTANDO TIEMPO DE PRETEST
+TIEMPOS=""
+for t in $(seq 60 -$FREC_PRETEST 0)
+do
+    TIEMPOS="$t,$TIEMPOS"
+done
+TIEMPOS=$(echo "$TIEMPOS" | sed -e "s/,60,//")
+tiempopretest="$TIEMPOS * * * * $DIR/testcon-pretest"
+
+PING=$(which ping)
+echo "Creando el script de pretest..."
+echo "DIR=\"$DIR\"" > testcon-pretest
+echo "PING=\"$PING\"" >> testcon-pretest
+cat bin/testcon-pretest.tmp >> testcon-pretest
+chmod a+rx testcon-pretest
+
 echo "Creando el script de grafico..."
 GNUPLOT=$(which gnuplot)
 echo "DIR=\"$DIR\"" > testcon-grafica
@@ -51,6 +67,7 @@ echo "Creando el archivo de programacion..."
 echo "$tiempotest" > testcon-cron
 if [ $FREC_DESBLOQUEO -gt 0 ];then echo "$tiempobloqueo" >> testcon-cron;fi
 if [ $FREC_GRAFICO -gt 0 ];then echo "$tiempografico" >> testcon-cron;fi
+if [ $FREC_PRETEST -gt 0 ];then echo "$tiempopretest" >> testcon-cron;fi
 
 echo "Ahora puede:
 
